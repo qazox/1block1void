@@ -15,7 +15,7 @@ Chunk.prototype.setBlock = function(x,y, block) {
 }
 
 Chunk.prototype.getBlock = function(x,y) {
-    return this.blocks[x * Chunk.CHUNK_SIZE + y];
+    return mainTiles.tiles[this.blocks[x * Chunk.CHUNK_SIZE + y] || 0];
 }
 
 Chunk.CHUNK_SIZE = 16;

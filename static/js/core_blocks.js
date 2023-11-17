@@ -8,7 +8,8 @@
 mainTiles.loadSet(
     'Vanilla/Core',
     [
+        new Tile('air','Air'),
         new Tile('stone','Stone'),
-        new Tile('cobbles','Cobblestone')
+        new Tile('cobbles','Cobblestone').gravity(1,16)
     ]
 );

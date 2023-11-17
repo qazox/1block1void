@@ -19,8 +19,8 @@ Canvas.prototype.renderBlock = function(xy, cxy) {
     let y = xy % Chunk.CHUNK_SIZE;
     
     cxy = cxy.split(',');
-    let cx = cxy[0];
-    let cy = cxy[1];
+    let cx = cxy[0] * 1;
+    let cy = cxy[1] * 1;
 
     x += cx * Chunk.CHUNK_SIZE;
     y += cy * Chunk.CHUNK_SIZE;

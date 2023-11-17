@@ -17,7 +17,7 @@ function Tile(asset, id) {
     this.id = id;
     this.number = -1;
     this.interactions = [];
-    this.attributes = [];
+    this.attributes = {};
 
     /*
         Interactions are used for dynamic functions that

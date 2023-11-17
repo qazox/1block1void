@@ -48,7 +48,7 @@ TickHandler.prototype.tick = function() {
     let off = calcGravity(this.canvas.cx,this.canvas.cy,16, this.canvas.chunks);
 
     if (Math.abs(off.force[0]) > 0.05) off.force[0] = Math.sign(off.force[0])* .05;
-    if (Math.abs(off.force[1]) > 0.05) off.force[0] = Math.sign(off.force[1]) * .05;
+    if (Math.abs(off.force[1]) > 0.05) off.force[1] = Math.sign(off.force[1]) * .05;
 
     this.canvas.cx += off.force[0] * 0.4;
     this.canvas.cy += off.force[1] * 0.4;

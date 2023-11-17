@@ -32,9 +32,9 @@ Canvas.prototype.renderBlock = function (xy, cxy) {
     x += cx * Chunk.CHUNK_SIZE;
     y += cy * Chunk.CHUNK_SIZE;
 
-    let block = this.chunks.chunks[cxy].blocks[xy];
+    let block = this.chunks.getBlock(x,y);
 
-    let img = mainTiles.tiles[block].asset;
+    let img = block.asset;
 
     this.ctx.drawImage(
         img, 
@@ -47,9 +47,16 @@ Canvas.prototype.render = function () {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.ctx.imageSmoothingEnabled = false;
 
-    for (let cxy in this.chunks.chunks) {
-        for (let xy in this.chunks.chunks[cxy].blocks) {
-            this.renderBlock(xy, cxy)
+    let compSize = Chunk.CHUNK_SIZE * Chunk.CHUNK_AREA
+
+    for (let x = Math.floor(this.player.x - compSize); x < this.player.x + compSize; x += Chunk.CHUNK_SIZE) {
+        for (let y = Math.floor(this.player.y - compSize); y < this.player.y + compSize; y += Chunk.CHUNK_SIZE) {
+            this.chunks.getBlock(x,y);
+            let cxy = this.chunks.getCoords(x,y)[0];
+            if (!(cxy in this.chunks.chunks)) continue;
+            for (let xy in this.chunks.chunks[cxy].blocks) {
+                this.renderBlock(xy, cxy)
+            }
         }
     }
 

@@ -5,9 +5,13 @@
     as part of a larger world grid.
 */
 
-function Chunk() {
+function Chunk(noInit) {
     this.blocks = new Uint16Array(Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE);
     this.meta = {}; // This does nothing yet, but in the future will hold metadata
+
+    if (!noInit) {
+        this.setBlock(0,0,mainTiles.resolve('Vanilla/Core','Cobblestone'))
+    }
 }
 
 Chunk.prototype.setBlock = function(x,y, block) {
@@ -19,12 +23,14 @@ Chunk.prototype.getBlock = function(x,y) {
 }
 
 Chunk.CHUNK_SIZE = 16;
-Chunk.CHUNK_AREA = 16;
+Chunk.CHUNK_AREA = 3;
 
 Chunk.BLOCK_SIZE = 32;
 
+
 function ChunkManager() {
     this.chunks = {};
+    this.radius = 2;
 }
 
 ChunkManager.prototype.getCoords = function (x,y) {
@@ -42,6 +48,9 @@ ChunkManager.prototype.getCoords = function (x,y) {
 }
 
 ChunkManager.prototype.getBlock = function (x,y) {
+    if (Math.max(Math.abs(x),Math.abs(y)) == this.radius) return mainTiles.resolve('Vanilla/Core','Barrier')
+    if (Math.max(Math.abs(x),Math.abs(y)) > this.radius) return mainTiles.resolve('Vanilla/Core','Air');
+
     let coords = this.getCoords(x,y);
 
     if (!this.chunks[coords[0]]) this.chunks[coords[0]] = new Chunk();

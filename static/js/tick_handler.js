@@ -9,26 +9,6 @@ function TickHandler(canvas) {
 }
 
 TickHandler.prototype.tick = function() {
-
-    if (Math.random() > 0.9999) {
-
-        this.canvas.chunks.setBlock(
-            Math.floor(Math.random() * 50),
-            Math.floor(Math.random() * 50),
-            mainTiles.resolve('Vanilla/Core','Cobblestone'),
-            true
-        );
-    } 
-    if (Math.random() > 0.999) {
-
-        this.canvas.chunks.setBlock(
-            Math.floor(Math.random() * 50),
-            Math.floor(Math.random() * 50),
-            mainTiles.resolve('Vanilla/Core','Ice'),
-            true
-        );
-    } 
-
     let ch = this.canvas.chunks.chunks;
     for (let cxy in ch) {
         let blocks = ch[cxy].blocks;
@@ -45,8 +25,14 @@ TickHandler.prototype.tick = function() {
         }
     }
 
+    if (this.ticks % 100 == 99) {
+        this.canvas.chunks.radius ++;
+    }
+
     this.canvas.render();
     this.ticks++;
+
+    if (this.ticks > 10000) this.ticks = 0;
 
     new GameEvent('tick', this.canvas.player, [], this.canvas);
 }

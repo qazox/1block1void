@@ -30,8 +30,8 @@ function calcGravity(cx, cy, distance, chunks) {
 function gravity(event, mass, distance) {
     if (event.type != 'tick') return;
     let ticks = event.data[2];
-    if (ticks % 60 != 0) return;
-    ticks /= 60;
+    if (ticks % 10 != 0) return;
+    ticks /= 10;
 
     let chunks = event.canvas.chunks;
 

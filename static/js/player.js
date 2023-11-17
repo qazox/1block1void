@@ -39,5 +39,11 @@ let tick = function (event) {
         event.target.y -= yv * 1.1;
     }
 
+    event.target.x = Math.min(event.target.x,event.canvas.chunks.radius-1);
+    event.target.x = Math.max(event.target.x,-event.canvas.chunks.radius-1);
+
+    event.target.y = Math.min(event.target.y,event.canvas.chunks.radius-1);
+    event.target.y = Math.max(event.target.y,-event.canvas.chunks.radius-1);
+
     if (event.target.ticks > 3600) event.target.ticks = 0;
 }

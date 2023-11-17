@@ -4,10 +4,10 @@ const port = 3000;
 
 let app = new express();
 
-app.use(express.static('res/static'));
+app.use(express.static('static'));
 
 app.get('/', (req,res) => {
-    res.sendFile(`${process.cwd()}/res/index.html`)
+    res.sendFile(`${process.cwd()}/res/core.html`)
 })
 
 app.listen(port, () => {

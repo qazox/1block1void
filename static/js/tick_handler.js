@@ -8,11 +8,25 @@ function TickHandler(canvas) {
 }
 
 TickHandler.prototype.tick = function() {
-    this.canvas.chunks.setBlock(
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-        mainTiles.resolve('Vanilla/Core','Cobblestone')
-    );
+
+    if (Math.random() > 0.9999) {
+
+        this.canvas.chunks.setBlock(
+            Math.floor(Math.random() * 50),
+            Math.floor(Math.random() * 50),
+            mainTiles.resolve('Vanilla/Core','Cobblestone')
+        );
+    } 
+    if (Math.random() > 0.999) {
+
+        this.canvas.chunks.setBlock(
+            Math.floor(Math.random() * 50),
+            Math.floor(Math.random() * 50),
+            mainTiles.resolve('Vanilla/Core','Ice')
+        );
+    } 
+
+
 
     let ch = this.canvas.chunks.chunks;
     for (let cxy in ch) {

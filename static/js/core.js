@@ -5,6 +5,8 @@
 function Canvas() {
     this.width = 0;
     this.height = 0;
+    this.x = 0;
+    this.y = 0;
 
     this.elem = document.querySelector('canvas');
     this.ctx = this.elem.getContext('2d');
@@ -29,7 +31,7 @@ Canvas.prototype.renderBlock = function(xy, cxy) {
 
     let img = mainTiles.tiles[block].asset;
 
-    this.ctx.drawImage(img,x * Chunk.BLOCK_SIZE,y * Chunk.BLOCK_SIZE);
+    this.ctx.drawImage(img,x * Chunk.BLOCK_SIZE - this.x,y * Chunk.BLOCK_SIZE - this.y);
 }
 
 Canvas.prototype.render = function () {
@@ -46,10 +48,14 @@ Canvas.prototype.render = function () {
 Canvas.prototype.resize = function () {
     this.width = this.elem.width = document.body.offsetWidth;
     this.height = this.elem.height = document.body.offsetHeight;
+
+    this.x = -this.width / 2;
+    this.y = -this.height / 2;
     this.render();
 }
 
 var canvas = new Canvas();
 var handler = new TickHandler(canvas);
 
+this.canvas.chunks.setBlock(0,0,mainTiles.resolve('Vanilla/Core','Stone'));
 setInterval(function() { handler.tick() },1000/60);

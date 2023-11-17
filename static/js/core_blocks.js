@@ -9,7 +9,10 @@ mainTiles.loadSet(
     'Vanilla/Core',
     [
         new Tile('air','Air'),
-        new Tile('stone','Stone'),
-        new Tile('cobbles','Cobblestone').gravity(1,10)
+        new Tile('stone','Stone').gravity(3,6),
+        new Tile('cobbles','Cobblestone').gravity(1,6),
+        new Tile('soil','Soil').gravity(2,6),
+        new Tile('iron','Iron').gravity(5,6),
+        new Tile('ice','Ice').gravity(0.1,6)
     ]
 );

@@ -49,9 +49,10 @@ ChunkManager.prototype.getBlock = function (x,y) {
     return this.chunks[coords[0]].getBlock(coords[1],coords[2]);
 }
 
-ChunkManager.prototype.setBlock = function (x, y, block) {
+ChunkManager.prototype.setBlock = function (x, y, block, onlyAir) {
     let coords = this.getCoords(x,y);
 
-    this.getBlock(x,y);
+    let block = this.getBlock(x,y);
+    if (onlyAir && block.id != 'Air') return;
     this.chunks[coords[0]].setBlock(coords[1],coords[2],block);
 }

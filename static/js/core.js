@@ -1,5 +1,7 @@
 /*
     Code for rendering and startup, and the game world.
+
+    This also contains the player code for now.
 */
 
 function Canvas() {

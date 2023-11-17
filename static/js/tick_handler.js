@@ -14,7 +14,8 @@ TickHandler.prototype.tick = function() {
         this.canvas.chunks.setBlock(
             Math.floor(Math.random() * 50),
             Math.floor(Math.random() * 50),
-            mainTiles.resolve('Vanilla/Core','Cobblestone')
+            mainTiles.resolve('Vanilla/Core','Cobblestone'),
+            true
         );
     } 
     if (Math.random() > 0.999) {
@@ -22,7 +23,8 @@ TickHandler.prototype.tick = function() {
         this.canvas.chunks.setBlock(
             Math.floor(Math.random() * 50),
             Math.floor(Math.random() * 50),
-            mainTiles.resolve('Vanilla/Core','Ice')
+            mainTiles.resolve('Vanilla/Core','Ice'),
+            true
         );
     } 
 

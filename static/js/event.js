@@ -6,6 +6,7 @@ function GameEvent(type, target, data, canvas) {
     this.type = type;
     this.data = data;
     this.canvas = canvas;
+    this.target = target;2
 
     for (let interaction in target.interactions) {
         target.interactions[interaction](this);

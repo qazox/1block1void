@@ -11,23 +11,16 @@ function Canvas() {
     this.x = 25;
     this.y = 25;
 
-    this.cx = 15;
-    this.cy = 15;
+    this.player = new Player();
 
-    this.keys = {};
     this.elem = document.querySelector('canvas');
     this.ctx = this.elem.getContext('2d');
     this.chunks = new ChunkManager();
 
     addEventListener('resize', () => this.resize());
-    addEventListener('keydown', (e) => this.key(e, true));
-    addEventListener('keyup', (e) => this.key(e, false));
     this.resize();
 }
 
-Canvas.prototype.key = function (e, state) {
-    this.keys[e.key] = state;
-}
 Canvas.prototype.renderBlock = function (xy, cxy) {
     let x = Math.floor(xy / Chunk.CHUNK_SIZE);
     let y = xy % Chunk.CHUNK_SIZE;
@@ -43,7 +36,11 @@ Canvas.prototype.renderBlock = function (xy, cxy) {
 
     let img = mainTiles.tiles[block].asset;
 
-    this.ctx.drawImage(img, x * Chunk.BLOCK_SIZE - this.x - this.cx * Chunk.BLOCK_SIZE, y * Chunk.BLOCK_SIZE - this.y - this.cy * Chunk.BLOCK_SIZE);
+    this.ctx.drawImage(
+        img, 
+        x * Chunk.BLOCK_SIZE - this.x - this.player.x * Chunk.BLOCK_SIZE, 
+        y * Chunk.BLOCK_SIZE - this.y - this.player.y * Chunk.BLOCK_SIZE
+    );
 }
 
 Canvas.prototype.render = function () {
@@ -73,4 +70,5 @@ var canvas = new Canvas();
 var handler = new TickHandler(canvas);
 
 this.canvas.chunks.setBlock(0, 0, mainTiles.resolve('Vanilla/Core', 'Stone'));
+this.canvas.chunks.setBlock(0, 8, mainTiles.resolve('Vanilla/Core', 'Iron'));
 setInterval(function () { handler.tick() }, 1000 / 60);

@@ -11,14 +11,12 @@ function calcGravity(cx, cy, distance, chunks) {
 
     for (let x = -distance; x < distance + 1; x++) {
         for (let y = -distance; y < distance + 1; y++) {
-            let block = chunks.getBlock(cx + x, cy + y);
+            let block = chunks.getBlock(Math.floor(cx + x), Math.floor(cy + y));
             let mass2 = block.attributes.mass || 0;
 
-            let dist = Math.abs(x) + Math.abs(y)
+            let dist = Math.abs(Math.floor(cx + x) - cx) + Math.abs(Math.floor(cy + y) - cy)
 
-            if (dist == 0) continue;
-
-            if (dist < 1) dist = 1;
+            dist += 1;
 
             force[0] += x * mass2 / dist / dist;
             force[1] += y * mass2 / dist / dist;
@@ -26,23 +24,23 @@ function calcGravity(cx, cy, distance, chunks) {
         }
     }
 
-    return {force, totalForce};
+    return { force, totalForce };
 }
 
 function gravity(event, mass, distance) {
     if (event.type != 'tick') return;
     let ticks = event.data[2];
-    if (ticks % 16 != 0) return;
-    ticks /= 16;
+    if (ticks % 60 != 0) return;
+    ticks /= 60;
 
     let chunks = event.canvas.chunks;
 
     let cx = event.data[0];
     let cy = event.data[1];
 
-    let { force } = calcGravity(cx,cy, distance, chunks);
+    let { force } = calcGravity(cx, cy, distance, chunks);
 
-    if (ticks % Math.max(force[0], force[1]) >= 1 || (force[0] == 0 && force[1] == 0)) return;
+    if (ticks % (1 / Math.max(force[0], force[1])) >= 1 || (force[0] == 0 && force[1] == 0)) return;
 
     let dir = [0, 0];
 

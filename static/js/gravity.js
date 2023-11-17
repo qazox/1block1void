@@ -20,7 +20,7 @@ function gravity(event, mass, distance) {
             let block = chunks.getBlock(cx+x,cy+y);
             let mass2 = block.attributes.mass || 0;
 
-            let dist = Math.max(Math.abs(x),Math.abs(y))
+            let dist = Math.abs(x) + Math.abs(y)
 
 
             if (dist == 0) continue;

@@ -10,6 +10,6 @@ mainTiles.loadSet(
     [
         new Tile('air','Air'),
         new Tile('stone','Stone'),
-        new Tile('cobbles','Cobblestone').gravity(1,16)
+        new Tile('cobbles','Cobblestone').gravity(1,10)
     ]
 );

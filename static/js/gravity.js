@@ -5,19 +5,9 @@
     with taxicab distance.
 */
 
-function gravity(event, mass, distance) {
-    if (event.type != 'tick') return;
-    let ticks = event.data[2];
-    if (ticks % 16 != 0) return;
-    ticks /= 16;
-
-    let chunks = event.canvas.chunks;
-
+function calcGravity(cx, cy, distance, chunks) {
     let force = [0, 0];
     let totalForce = 0;
-
-    let cx = event.data[0];
-    let cy = event.data[1];
 
     for (let x = -distance; x < distance + 1; x++) {
         for (let y = -distance; y < distance + 1; y++) {
@@ -28,11 +18,29 @@ function gravity(event, mass, distance) {
 
             if (dist == 0) continue;
 
+            if (dist < 1) dist = 1;
+
             force[0] += x * mass2 / dist / dist;
             force[1] += y * mass2 / dist / dist;
             totalForce += Math.abs(x * mass2 / dist / dist) + Math.abs(y * mass2 / dist / dist)
         }
     }
+
+    return {force, totalForce};
+}
+
+function gravity(event, mass, distance) {
+    if (event.type != 'tick') return;
+    let ticks = event.data[2];
+    if (ticks % 16 != 0) return;
+    ticks /= 16;
+
+    let chunks = event.canvas.chunks;
+
+    let cx = event.data[0];
+    let cy = event.data[1];
+
+    let { force } = calcGravity(cx,cy, distance, chunks);
 
     if (ticks % Math.max(force[0], force[1]) >= 1 || (force[0] == 0 && force[1] == 0)) return;
 

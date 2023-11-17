@@ -28,8 +28,8 @@ function ChunkManager() {
 }
 
 ChunkManager.prototype.getCoords = function (x,y) {
-    x = Math.floor(x);
-    y = Math.floor(y);
+    x = Math.round(x);
+    y = Math.round(y);
 
     x2 = Math.floor(x / Chunk.CHUNK_SIZE);
     y2 = Math.floor(y / Chunk.CHUNK_SIZE)

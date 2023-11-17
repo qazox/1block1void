@@ -5,6 +5,7 @@
 function TickHandler(canvas) {
     this.canvas = canvas;
     this.ticks = 0;
+
 }
 
 TickHandler.prototype.tick = function() {

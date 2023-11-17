@@ -1,2 +1,2 @@
 # 1block1void
-thing
+1 block in The Void... how long can you survive?

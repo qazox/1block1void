@@ -1,5 +1,5 @@
 /*
-    Code for rendering and startup.
+    Code for rendering and startup, and the game world.
 */
 
 function Canvas() {
@@ -8,25 +8,38 @@ function Canvas() {
 
     this.elem = document.querySelector('canvas');
     this.ctx = this.elem.getContext('2d');
-    this.chunks = new Chunk();
+    this.chunks = new ChunkManager();
 
     addEventListener('resize', () => this.resize());
     this.resize();
+}
+
+Canvas.prototype.renderBlock = function(xy, cxy) {
+    let x = Math.floor(xy / Chunk.CHUNK_SIZE);
+    let y = xy % Chunk.CHUNK_SIZE;
+    
+    cxy = cxy.split(',');
+    let cx = cxy[0];
+    let cy = cxy[1];
+
+    x += cx * Chunk.CHUNK_SIZE;
+    y += cy * Chunk.CHUNK_SIZE;
+
+    let block = this.chunks.chunks[cxy].blocks[xy];
+
+    let img = mainTiles.tiles[block].asset;
+
+    this.ctx.drawImage(img,x * Chunk.BLOCK_SIZE,y * Chunk.BLOCK_SIZE);
 }
 
 Canvas.prototype.render = function () {
     this.ctx.clearRect(0,0,this.width,this.height);
     this.ctx.imageSmoothingEnabled = false;
 
-    for (let xy in this.chunks.blocks) {
-        let x = Math.floor(xy / Chunk.CHUNK_SIZE);
-        let y = xy % Chunk.CHUNK_SIZE;
-
-        let block = this.chunks.blocks[xy];
-
-        let img = mainTiles.tiles[block].asset;
-        
-        this.ctx.drawImage(img,x * Chunk.BLOCK_SIZE,y * Chunk.BLOCK_SIZE);
+    for (let cxy in this.chunks.chunks) {
+        for (let xy in this.chunks.chunks[cxy].blocks) {
+            this.renderBlock(xy,cxy)
+        }
     }
 }
 
@@ -37,5 +50,6 @@ Canvas.prototype.resize = function () {
 }
 
 var canvas = new Canvas();
-canvas.chunks.setBlock(0,1,mainTiles.resolve('Vanilla/Core','Cobblestone'));
-canvas.render();
+var handler = new TickHandler(canvas);
+
+setInterval(function() { handler.tick() },1000/60);

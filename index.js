@@ -1,3 +1,11 @@
+/*
+    Code for the core of the webserver.
+
+    Currently, it only serves files, but
+    (eventually) multiplayer support
+    will be added.
+*/
+
 let express = require('express');
 
 const port = 3000;

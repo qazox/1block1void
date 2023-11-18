@@ -10,7 +10,7 @@ function TickHandler(canvas) {
 
 TickHandler.prototype.tick = function() {
     let ch = this.canvas.chunks.chunks;
-    this.canvas.chunks.noTick = {};
+    this.canvas.chunks.meta.noTick = {};
     for (let cxy in ch) {
         let blocks = ch[cxy].blocks;
         for (let xy in blocks) {
@@ -27,9 +27,6 @@ TickHandler.prototype.tick = function() {
             new GameEvent('tick', mainTiles.tiles[blocks[xy]], [x,y, this.ticks], this.canvas);
         }
     }
-
-
-    console.log(this.canvas.chunks.meta.noTick)
 
     if (this.ticks % 100 == 99) {
         this.canvas.chunks.radius ++;

@@ -19,7 +19,7 @@ Chunk.prototype.getBlock = function(x,y) {
 }
 
 Chunk.CHUNK_SIZE = 16;
-Chunk.CHUNK_AREA = 1;
+Chunk.CHUNK_AREA = 2;
 
 Chunk.BLOCK_SIZE = 64;
 

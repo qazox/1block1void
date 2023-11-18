@@ -24,7 +24,22 @@ Player.prototype.click = function (e) {
     x = Math.floor(x);
     y = Math.floor(y);
 
+    let blox = this.canvas.chunks.getBlock(x,y);
+
+    if (blox.id == 'Air' || blox.id == 'Barrier') return;
+
+    this.inv.push(blox);
+
     this.canvas.chunks.setBlock(x,y,mainTiles.resolve('Vanilla/Core','Air'));
+
+    /* TODO: rewrite */
+    let inv = document.querySelector("#inv");
+    inv.innerHTML = "";
+    for (let i in this.inv) {
+        let elem = new Image();
+        elem.src = this.inv[i].asset.src;
+        inv.appendChild(elem);
+    }
 }
 
 Player.prototype.key = function (e, state) {

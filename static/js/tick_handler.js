@@ -22,11 +22,14 @@ TickHandler.prototype.tick = function() {
             x += cxys[0] * Chunk.CHUNK_SIZE;
             y += cxys[1] * Chunk.CHUNK_SIZE;
 
-            if ( this.canvas.chunks.meta.noTick[`${x},${y}`]) return;
+            if ( this.canvas.chunks.meta.noTick[`${x},${y}`]) continue;
 
             new GameEvent('tick', mainTiles.tiles[blocks[xy]], [x,y, this.ticks], this.canvas);
         }
     }
+
+
+    console.log(this.canvas.chunks.meta.noTick)
 
     if (this.ticks % 100 == 99) {
         this.canvas.chunks.radius ++;

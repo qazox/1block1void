@@ -70,16 +70,16 @@ function gravity(event, mass, distance) {
     if (currBlock.id == 'Stellar Core' && offBlock.id == 'Air' && Math.random() > 0.9) {
         chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', 'Cobblestone'));
         chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
-        chunks.meta.noTick[`${cx + dir[0]}, ${[cy + dir[1]]}`] = true;
-        chunks.meta.noTick[`${cx} ${cy}`] = true;
+        chunks.meta.noTick[`${cx + dir[0]},${[cy + dir[1]]}`] = true;
+        chunks.meta.noTick[`${cx},${cy}`] = true;
         return;
     }
 
     if (offBlock.id == 'Air') {
         chunks.setBlock(cx + dir[0], cy + dir[1], currBlock);
         chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Air'));
-        chunks.meta.noTick[`${cx + dir[0]}, ${[cy + dir[1]]}`] = true;
-        chunks.meta.noTick[`${cx} ${cy}`] = true;
+        chunks.meta.noTick[`${cx + dir[0]},${[cy + dir[1]]}`] = true;
+        chunks.meta.noTick[`${cx},${cy}`] = true;
         return;
     }
 
@@ -87,8 +87,8 @@ function gravity(event, mass, distance) {
         let block = (Math.random() < 0.98) ? 'Soil' : 'Iron';
         chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', block));
         chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Air'));
-        chunks.meta.noTick[`${cx + dir[0]}, ${[cy + dir[1]]}`] = true;
-        chunks.meta.noTick[`${cx} ${cy}`] = true;
+        chunks.meta.noTick[`${cx + dir[0]},${[cy + dir[1]]}`] = true;
+        chunks.meta.noTick[`${cx},${cy}`] = true;
         return;
     }
 

@@ -15,6 +15,35 @@ function Player(manager) {
     addEventListener('keydown', (e) => this.key(e, true));
     addEventListener('keyup', (e) => this.key(e, false));
     document.addEventListener('click', (e) => this.click(e));
+    document.addEventListener('contextmenu', (e) => this.rclick(e));
+}
+
+Player.prototype.rclick = function (e) {
+    e.preventDefault();
+    if (this.inv.length < 1) return;
+
+
+    let x = e.pageX / Chunk.BLOCK_SIZE + this.x + this.canvas.x / Chunk.BLOCK_SIZE;
+    let y = e.pageY / Chunk.BLOCK_SIZE + this.y + this.canvas.y / Chunk.BLOCK_SIZE;
+    
+    x = Math.floor(x);
+    y = Math.floor(y);
+
+    let blox = this.canvas.chunks.getBlock(x,y);
+
+    if (blox.id != 'Air') return;
+
+    this.canvas.chunks.setBlock(x,y,this.inv[0]);
+    this.inv = this.inv.slice(1);
+
+    /* TODO: rewrite */
+    let inv = document.querySelector("#inv");
+    inv.innerHTML = "";
+    for (let i in this.inv) {
+        let elem = new Image();
+        elem.src = this.inv[i].asset.src;
+        inv.appendChild(elem);
+    }
 }
 
 Player.prototype.click = function (e) {

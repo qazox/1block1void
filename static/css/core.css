@@ -17,12 +17,12 @@ canvas {
     left: 10px;
 
     background: rgba(255,255,255,0.5);
-
-    padding: 10px;
 }
 
 #inv img {
     width: 64px;
     height: 64px;
     image-rendering: pixelated;
+
+    margin: 16px;
 }

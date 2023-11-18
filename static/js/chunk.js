@@ -5,9 +5,18 @@
     as part of a larger world grid.
 */
 
-function Chunk(noInit) {
+function Chunk(noInit, save, x, y) {
     this.blocks = new Uint16Array(Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE);
     this.meta = {};
+
+    fetch(`/api/save/${save}/${x}/${y}`, {
+        method: 'GET',
+    }).then(function(x) {
+        x.text().then(function(text) {
+            if (text == 'fail' || text.length != 512) return;
+            this.blocks = new Uint16Array(ENCODER.encode(text).buffer)
+        })
+    })
 
     if (Math.random() > 0.50) {
         this.setBlock(5,5,mainTiles.resolve('Vanilla/Core', 'Stellar Core'))
@@ -28,10 +37,11 @@ Chunk.CHUNK_AREA = 2;
 Chunk.BLOCK_SIZE = 64;
 
 
-function ChunkManager() {
+function ChunkManager(save) {
     this.chunks = {};
     this.radius = 2;
     this.meta = {noTick: {}};
+    this.save = save;
 }
 
 ChunkManager.prototype.getCoords = function (x,y) {
@@ -54,7 +64,7 @@ ChunkManager.prototype.getBlock = function (x,y) {
 
     let coords = this.getCoords(x,y);
 
-    if (!this.chunks[coords[0]]) this.chunks[coords[0]] = new Chunk();
+    if (!this.chunks[coords[0]]) this.chunks[coords[0]] = new Chunk(false, this.save, x, y);
 
     return this.chunks[coords[0]].getBlock(coords[1],coords[2]);
 }

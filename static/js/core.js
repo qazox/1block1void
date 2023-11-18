@@ -10,10 +10,11 @@ function Canvas() {
     this.height = 0;
     this.x = 25;
     this.y = 25;
+    this.save = Array(16+1).join((Math.random().toString(36)+'00000000000000000').slice(2, 18)).slice(0, 16);
 
     this.elem = document.querySelector('canvas');
     this.ctx = this.elem.getContext('2d');
-    this.chunks = new ChunkManager();
+    this.chunks = new ChunkManager(this.save);
 
     this.player = new Player(this);
 
@@ -80,4 +81,10 @@ var canvas = new Canvas();
 var handler = new TickHandler(canvas);
 
 this.canvas.chunks.setBlock(0, 0, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
-setInterval(function () { handler.tick() }, 1000 / 60);
+
+(async function() {
+    while (true) {
+        await handler.tick();
+        await new Promise(resolve => setTimeout(resolve, 1000 / 60));
+    }
+})();

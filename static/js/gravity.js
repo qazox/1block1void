@@ -25,15 +25,15 @@ function calcGravity(cx, cy, distance, chunks) {
     }
 
     if (cx < 0) {
-        force[0] -= 0.1;
+        force[0] -= 0.3;
     } else {
-        force[0] += 0.1
+        force[0] += 0.3
     }
 
     if (cy < 0) {
-        force[1] -= 0.1;
+        force[1] -= 0.3;
     } else {
-        force[1] += 0.1;
+        force[1] += 0.3;
     }
 
     return { force, totalForce };
@@ -63,14 +63,27 @@ function gravity(event, mass, distance) {
     }
 
     let currBlock = chunks.getBlock(cx, cy);
-    let offBlock = chunks.getBlock(cx + dir[0], cy + dir[1]);
 
+    let offBlock2;
+    if (currBlock.id == 'Stellar Core') {
+        offBlock2 = chunks.getBlock(cx + dir[0]*2, cy + dir[1]*2);
+    }
+    let offBlock = chunks.getBlock(cx + dir[0], cy + dir[1]);
     
     /* TODO: This should be cleaned up at some point. */
-    if (currBlock.id == 'Stellar Core' && offBlock.id == 'Air' && Math.random() > 0.9) {
-        chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', 'Cobblestone'));
+
+    if (currBlock.id == 'Stellar Core' && offBlock2.id == 'Air' && Math.random() > 0.99) {
+        chunks.setBlock(cx + dir[0]*2, cy + dir[1]*2, mainTiles.resolve('Vanilla/Core', 'Ice'));
         chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
-        chunks.meta.noTick[`${cx + dir[0]},${[cy + dir[1]]}`] = true;
+        chunks.meta.noTick[`${cx + dir[0]*2},${[cy + dir[1]*2]}`] = true;
+        chunks.meta.noTick[`${cx},${cy}`] = true;
+        return;
+    }
+
+    if (currBlock.id == 'Stellar Core' && offBlock2.id == 'Air' && Math.random() > 0.9) {
+        chunks.setBlock(cx + dir[0]*2, cy + dir[1]*2, mainTiles.resolve('Vanilla/Core', 'Cobblestone'));
+        chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
+        chunks.meta.noTick[`${cx + dir[0]*2},${[cy + dir[1]*2]}`] = true;
         chunks.meta.noTick[`${cx},${cy}`] = true;
         return;
     }

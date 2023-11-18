@@ -37,6 +37,7 @@ Canvas.prototype.renderBlock = function (xy, cxy) {
 
     let img = block.asset;
 
+    
     this.ctx.drawImage(
         img, 
         x * Chunk.BLOCK_SIZE - this.x - this.player.x * Chunk.BLOCK_SIZE, 
@@ -85,6 +86,6 @@ this.canvas.chunks.setBlock(0, 0, mainTiles.resolve('Vanilla/Core', 'Stellar Cor
 (async function() {
     while (true) {
         await handler.tick();
-        await new Promise(resolve => setTimeout(resolve, 1000 / 60));
+        await new Promise(resolve => setTimeout(resolve, 1000 / 70));
     }
 })();

@@ -59,12 +59,11 @@ ChunkManager.prototype.getCoords = function (x,y) {
 }
 
 ChunkManager.prototype.getBlock = function (x,y) {
-    if (Math.max(Math.abs(x),Math.abs(y)) == this.radius) return mainTiles.resolve('Vanilla/Core','Barrier')
-    if (Math.max(Math.abs(x),Math.abs(y)) > this.radius) return mainTiles.resolve('Vanilla/Core','Air');
-
     let coords = this.getCoords(x,y);
 
+    if (Math.max(Math.abs(x),Math.abs(y)) > this.radius) return mainTiles.resolve('Vanilla/Core','Air');
     if (!this.chunks[coords[0]]) this.chunks[coords[0]] = new Chunk(false, this.save, x, y);
+    if (Math.max(Math.abs(x),Math.abs(y)) == this.radius) return mainTiles.resolve('Vanilla/Core','Barrier')
 
     return this.chunks[coords[0]].getBlock(coords[1],coords[2]);
 }

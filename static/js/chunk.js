@@ -8,6 +8,11 @@
 function Chunk(noInit) {
     this.blocks = new Uint16Array(Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE);
     this.meta = {}; // This does nothing yet, but in the future will hold metadata
+
+
+    if (Math.random() > 0.50) {
+        this.setBlock(5,5,mainTiles.resolve('Vanilla/Core', 'Stellar Core'))
+    }
 }
 
 Chunk.prototype.setBlock = function(x,y, block) {

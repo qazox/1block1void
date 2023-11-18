@@ -7,8 +7,7 @@
 
 function Chunk(noInit) {
     this.blocks = new Uint16Array(Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE);
-    this.meta = {}; // This does nothing yet, but in the future will hold metadata
-
+    this.meta = {};
 
     if (Math.random() > 0.50) {
         this.setBlock(5,5,mainTiles.resolve('Vanilla/Core', 'Stellar Core'))
@@ -32,6 +31,7 @@ Chunk.BLOCK_SIZE = 64;
 function ChunkManager() {
     this.chunks = {};
     this.radius = 2;
+    this.meta = {noTick: {}};
 }
 
 ChunkManager.prototype.getCoords = function (x,y) {

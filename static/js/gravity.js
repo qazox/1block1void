@@ -62,30 +62,35 @@ function gravity(event, mass, distance) {
         dir = [0, Math.sign(force[1])];
     }
 
+    let currBlock = chunks.getBlock(cx, cy);
+    let offBlock = chunks.getBlock(cx + dir[0], cy + dir[1]);
 
-    setTimeout(function() {
-        let currBlock = chunks.getBlock(cx, cy);
-        let offBlock = chunks.getBlock(cx + dir[0], cy + dir[1]);
     
-        /* TODO: This should be cleaned up at some point. */
-    
-        if (offBlock.id == 'Air') {
-            chunks.setBlock(cx + dir[0], cy + dir[1], currBlock);
-            chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Air'));
-        }
-    
-        if (currBlock.id == 'Stellar Core' && Math.random() > 0.9) {
-            chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', 'Cobblestone'));
-            chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
-        }
-    
-        if (offBlock.id == 'Cobblestone' && currBlock.id == 'Cobblestone') {
-            let block = (Math.random() < 0.98) ? 'Soil' : 'Iron';
-            chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', block));
-            chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Air'));
-        }
-    
-    },1000/30)
+    /* TODO: This should be cleaned up at some point. */
+    if (currBlock.id == 'Stellar Core' && offBlock.id == 'Air' && Math.random() > 0.9) {
+        chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', 'Cobblestone'));
+        chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
+        chunks.meta.noTick[`${cx + dir[0]}, ${[cy + dir[1]]}`] = true;
+        chunks.meta.noTick[`${cx} ${cy}`] = true;
+        return;
+    }
+
+    if (offBlock.id == 'Air') {
+        chunks.setBlock(cx + dir[0], cy + dir[1], currBlock);
+        chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Air'));
+        chunks.meta.noTick[`${cx + dir[0]}, ${[cy + dir[1]]}`] = true;
+        chunks.meta.noTick[`${cx} ${cy}`] = true;
+        return;
+    }
+
+    if (offBlock.id == 'Cobblestone' && currBlock.id == 'Cobblestone') {
+        let block = (Math.random() < 0.98) ? 'Soil' : 'Iron';
+        chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', block));
+        chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Air'));
+        chunks.meta.noTick[`${cx + dir[0]}, ${[cy + dir[1]]}`] = true;
+        chunks.meta.noTick[`${cx} ${cy}`] = true;
+        return;
+    }
 
 }
 

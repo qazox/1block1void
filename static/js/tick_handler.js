@@ -10,6 +10,7 @@ function TickHandler(canvas) {
 
 TickHandler.prototype.tick = function() {
     let ch = this.canvas.chunks.chunks;
+    this.canvas.chunks.noTick = {};
     for (let cxy in ch) {
         let blocks = ch[cxy].blocks;
         for (let xy in blocks) {
@@ -20,6 +21,8 @@ TickHandler.prototype.tick = function() {
 
             x += cxys[0] * Chunk.CHUNK_SIZE;
             y += cxys[1] * Chunk.CHUNK_SIZE;
+
+            if ( this.canvas.chunks.meta.noTick[`${x},${y}`]) return;
 
             new GameEvent('tick', mainTiles.tiles[blocks[xy]], [x,y, this.ticks], this.canvas);
         }

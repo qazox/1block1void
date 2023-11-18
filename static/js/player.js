@@ -2,16 +2,29 @@
     Code for handling player movement and interactions.
 */
 
-function Player() {
+function Player(manager) {
     this.x = 10;
     this.y = 10;
     this.keys = {};
+    this.inv = [];
+    this.canvas = manager;
     this.interactions = [function (event) {
         tick(event)
     }];
 
     addEventListener('keydown', (e) => this.key(e, true));
     addEventListener('keyup', (e) => this.key(e, false));
+    document.addEventListener('click', (e) => this.click(e));
+}
+
+Player.prototype.click = function (e) {
+    let x = e.pageX / Chunk.BLOCK_SIZE + this.x + this.canvas.x / Chunk.BLOCK_SIZE;
+    let y = e.pageY / Chunk.BLOCK_SIZE + this.y + this.canvas.y / Chunk.BLOCK_SIZE;
+    
+    x = Math.floor(x);
+    y = Math.floor(y);
+
+    this.canvas.chunks.setBlock(x,y,mainTiles.resolve('Vanilla/Core','Air'));
 }
 
 Player.prototype.key = function (e, state) {
@@ -40,10 +53,10 @@ let tick = function (event) {
     }
 
     event.target.x = Math.min(event.target.x,event.canvas.chunks.radius-1);
-    event.target.x = Math.max(event.target.x,-event.canvas.chunks.radius-1);
+    event.target.x = Math.max(event.target.x,-event.canvas.chunks.radius+1);
 
     event.target.y = Math.min(event.target.y,event.canvas.chunks.radius-1);
-    event.target.y = Math.max(event.target.y,-event.canvas.chunks.radius-1);
+    event.target.y = Math.max(event.target.y,-event.canvas.chunks.radius+1);
 
     if (event.target.ticks > 3600) event.target.ticks = 0;
 }

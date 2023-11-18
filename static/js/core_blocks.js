@@ -14,6 +14,7 @@ mainTiles.loadSet(
         new Tile('soil','Soil').gravity(0.4,8),
         new Tile('iron','Iron').gravity(0.5,8),
         new Tile('ice','Ice').gravity(0.1,2),
+        new Tile('stellar','Stellar Core').gravity(1,10),
         new Tile('barrier','Barrier')
     ]
 );

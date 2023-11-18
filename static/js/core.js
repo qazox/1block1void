@@ -11,11 +11,11 @@ function Canvas() {
     this.x = 25;
     this.y = 25;
 
-    this.player = new Player();
-
     this.elem = document.querySelector('canvas');
     this.ctx = this.elem.getContext('2d');
     this.chunks = new ChunkManager();
+
+    this.player = new Player(this);
 
     addEventListener('resize', () => this.resize());
     this.resize();
@@ -39,7 +39,9 @@ Canvas.prototype.renderBlock = function (xy, cxy) {
     this.ctx.drawImage(
         img, 
         x * Chunk.BLOCK_SIZE - this.x - this.player.x * Chunk.BLOCK_SIZE, 
-        y * Chunk.BLOCK_SIZE - this.y - this.player.y * Chunk.BLOCK_SIZE
+        y * Chunk.BLOCK_SIZE - this.y - this.player.y * Chunk.BLOCK_SIZE,
+        Chunk.BLOCK_SIZE,
+        Chunk.BLOCK_SIZE
     );
 }
 
@@ -70,12 +72,12 @@ Canvas.prototype.resize = function () {
 
     this.x = -this.width / 2;
     this.y = -this.height / 2;
+
     this.render();
 }
 
 var canvas = new Canvas();
 var handler = new TickHandler(canvas);
 
-this.canvas.chunks.setBlock(0, 0, mainTiles.resolve('Vanilla/Core', 'Stone'));
-this.canvas.chunks.setBlock(0, 8, mainTiles.resolve('Vanilla/Core', 'Iron'));
+this.canvas.chunks.setBlock(0, 0, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
 setInterval(function () { handler.tick() }, 1000 / 60);

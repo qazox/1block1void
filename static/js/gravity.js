@@ -24,6 +24,18 @@ function calcGravity(cx, cy, distance, chunks) {
         }
     }
 
+    if (cx < 0) {
+        force[0] -= 0.1;
+    } else {
+        force[0] += 0.1
+    }
+
+    if (cy < 0) {
+        force[1] -= 0.1;
+    } else {
+        force[1] += 0.1;
+    }
+
     return { force, totalForce };
 }
 
@@ -58,6 +70,11 @@ function gravity(event, mass, distance) {
     if (offBlock.id == 'Air') {
         chunks.setBlock(cx + dir[0], cy + dir[1], currBlock);
         chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Air'));
+    }
+
+    if (currBlock.id == 'Stellar Core' && Math.random() > 0.9) {
+        chunks.setBlock(cx + dir[0], cy + dir[1], mainTiles.resolve('Vanilla/Core', 'Cobblestone'));
+        chunks.setBlock(cx, cy, mainTiles.resolve('Vanilla/Core', 'Stellar Core'));
     }
 
     if (offBlock.id == 'Cobblestone' && currBlock.id == 'Cobblestone') {

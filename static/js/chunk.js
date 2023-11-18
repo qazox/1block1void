@@ -8,10 +8,6 @@
 function Chunk(noInit) {
     this.blocks = new Uint16Array(Chunk.CHUNK_SIZE * Chunk.CHUNK_SIZE);
     this.meta = {}; // This does nothing yet, but in the future will hold metadata
-
-    if (!noInit) {
-        this.setBlock(0,0,mainTiles.resolve('Vanilla/Core','Cobblestone'))
-    }
 }
 
 Chunk.prototype.setBlock = function(x,y, block) {
@@ -23,9 +19,9 @@ Chunk.prototype.getBlock = function(x,y) {
 }
 
 Chunk.CHUNK_SIZE = 16;
-Chunk.CHUNK_AREA = 3;
+Chunk.CHUNK_AREA = 1;
 
-Chunk.BLOCK_SIZE = 32;
+Chunk.BLOCK_SIZE = 64;
 
 
 function ChunkManager() {
@@ -63,5 +59,5 @@ ChunkManager.prototype.setBlock = function (x, y, block, onlyAir) {
 
     let blockGet = this.getBlock(x,y);
     if (onlyAir && blockGet.id != 'Air') return;
-    this.chunks[coords[0]].setBlock(coords[1],coords[2],block);
+    if (this.chunks[coords[0]]) this.chunks[coords[0]].setBlock(coords[1],coords[2],block);
 }

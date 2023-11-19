@@ -56,7 +56,7 @@ function gravity(event, mass, distance) {
 
     let dir = [0, 0];
 
-    if (Math.abs(force[0]) > Math.abs(force[1])) {
+    if (ticks % (Math.abs(force[0]) + Math.abs(force[1])) < Math.abs(force[0])) {
         dir = [Math.sign(force[0]), 0]
     } else {
         dir = [0, Math.sign(force[1])];

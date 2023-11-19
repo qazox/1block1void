@@ -22,7 +22,7 @@ function Canvas() {
     this.resize();
 }
 
-Canvas.prototype.renderBlock = function (xy, cxy) {
+Canvas.prototype.renderBlock = async function (xy, cxy) {
     let x = Math.floor(xy / Chunk.CHUNK_SIZE);
     let y = xy % Chunk.CHUNK_SIZE;
 
